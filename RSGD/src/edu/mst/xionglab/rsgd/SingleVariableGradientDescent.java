@@ -2,16 +2,16 @@ package edu.mst.xionglab.rsgd;
 
 import Jama.Matrix;
 
-public class GDIteration {
+public class SingleVariableGradientDescent {
 	public static double convergence = 1.0e-4;
 	public static int maxIterations = 10000;
-	private ObjectiveFunction _of;
+	private SingleVariableObjectiveFunction _of;
 	private Matrix _parameter = null;
 	private Matrix _parameterPrev = null;
 	private double _learningRate = 0.01;
 	private int count = 0;
 
-	public GDIteration(ObjectiveFunction of) {
+	public SingleVariableGradientDescent(SingleVariableObjectiveFunction of) {
 		this._of = of;
 	}
 	
@@ -19,12 +19,12 @@ public class GDIteration {
 		return this._parameterPrev;
 	}
 
-	public GDIteration(ObjectiveFunction of, Matrix parameter) {
+	public SingleVariableGradientDescent(SingleVariableObjectiveFunction of, Matrix parameter) {
 		this(of);
 		this._parameter = parameter;
 	}
 
-	public GDIteration(ObjectiveFunction of, Matrix parameter, double learningRate) {
+	public SingleVariableGradientDescent(SingleVariableObjectiveFunction of, Matrix parameter, double learningRate) {
 		this(of, parameter);
 		this._learningRate = learningRate;
 	}
@@ -57,7 +57,7 @@ public class GDIteration {
 		if (maxIterations < count)
 			return false;
 		double error = iterate();
-		if (error > GDIteration.convergence) {
+		if (error > SingleVariableGradientDescent.convergence) {
 			return true;
 		} else
 			return false;

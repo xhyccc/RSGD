@@ -1,10 +1,10 @@
 package edu.mst.xionglab.rsgd.funcs;
 
 import Jama.Matrix;
-import edu.mst.xionglab.rsgd.GDIteration;
-import edu.mst.xionglab.rsgd.ObjectiveFunction;
+import edu.mst.xionglab.rsgd.SingleVariableGradientDescent;
+import edu.mst.xionglab.rsgd.SingleVariableObjectiveFunction;
 
-public class QuadraticFunction implements ObjectiveFunction {
+public class QuadraticFunction implements SingleVariableObjectiveFunction {
 	private Matrix _A, _B; // A is a p\times p matrix, B is a p \times 1 matrix
 	private double _C; // c is a scalar
 
@@ -30,7 +30,7 @@ public class QuadraticFunction implements ObjectiveFunction {
 
 	public Matrix gradient(Matrix input) {
 		// TODO Auto-generated method stub
-		return this._A.times(input).plus(_B);
+		return this._A.times(2).times(input).plus(_B);
 	}
 
 	public static void main(String[] args){
@@ -51,7 +51,7 @@ public class QuadraticFunction implements ObjectiveFunction {
 		Matrix parameter = new Matrix(pMat);
 		
 		QuadraticFunction aFunc =new QuadraticFunction(A,B,0);
-		GDIteration gdi = new GDIteration(aFunc, parameter);
+		SingleVariableGradientDescent gdi = new SingleVariableGradientDescent(aFunc, parameter);
 		gdi.GDProcedure();
 		System.out.println(gdi.getResult().getColumnDimension()+"\t"+gdi.getResult().getRowDimension());
 		
